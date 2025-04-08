@@ -6,3 +6,4 @@ module com.example.javafx {
     opens com.example.javafx to javafx.fxml;
     exports com.example.javafx;
 }
+

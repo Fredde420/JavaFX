@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoanDAO {
+    public void insertLoan(Loan loan) {
+    }
+
     public List<Loan> getAllLoans() {
         List<Loan> loans = new ArrayList<>();
         String query = "SELECT * FROM loan";
@@ -32,4 +35,6 @@ public class LoanDAO {
 
         return loans;
     }
+
+
 }

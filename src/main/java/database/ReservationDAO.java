@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationDAO {
+
+    public void insertReservation(Reservation reservation) {
+
+    }
     public List<Reservation> getAllReservations() {
         List<Reservation> reservations = new ArrayList<>();
         String query = "SELECT * FROM reservation";
@@ -30,4 +34,6 @@ public class ReservationDAO {
 
         return reservations;
     }
+
+
 }

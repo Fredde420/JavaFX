@@ -46,7 +46,7 @@ public class ReviewController {
             handleRefresh();
             handleClear();
         } catch (Exception e) {
-            showAlert("Error", "Invalid input: " + e.getMessage());
+            showAlert("Invalid input: " + e.getMessage());
         }
     }
 
@@ -64,9 +64,9 @@ public class ReviewController {
         reviewDatePicker.setValue(null);
     }
 
-    private void showAlert(String title, String message) {
+    private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
-        alert.setTitle(title);
+        alert.setTitle("Error");
         alert.showAndWait();
     }
 }

@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class database {
-    private static final String URL = "jdbc:mysql://localhost:3306/librarydb";
+    private static final String URL = "jdbc:mysql://localhost:3306/bibliotek";
     private static final String USER = "root";
     private static final String PASSWORD = "";
     private static Connection connection;

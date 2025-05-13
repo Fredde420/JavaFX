@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewDAO {
+
+    public void insertReview(Review review) {
+    }
+
     public List<Review> getAllReviews() {
         List<Review> reviews = new ArrayList<>();
         String query = "SELECT * FROM review";
@@ -32,4 +36,6 @@ public class ReviewDAO {
 
         return reviews;
     }
+
+
 }

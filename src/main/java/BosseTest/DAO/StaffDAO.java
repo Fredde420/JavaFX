@@ -1,3 +1,4 @@
+/*
 package BosseTest.DAO;
 
 import BosseTest.Annat.Staff;
@@ -14,3 +15,4 @@ public class StaffDAO {
         }
     }
 }
+*/

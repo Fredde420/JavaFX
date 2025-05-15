@@ -1,16 +1,19 @@
-package Databas;
+package database;
+
+
+import model.Reminder;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReminderActions {
+public class ReminderDAO {
 
     public void createReminder(int reminderID, LocalDateTime reminderDate, int userID, int loanID) {
         String query = "INSERT INTO reminder (reminderID, reminderDate, userID, loanID) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = Database.connect();
+        try (Connection conn = database.connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, userID);
@@ -30,7 +33,7 @@ public class ReminderActions {
         List<Reminder> reminders = new ArrayList<>();
         String query = "SELECT * FROM reminder";
 
-        try (Connection conn = Database.connect();
+        try (Connection conn = database.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
@@ -55,7 +58,7 @@ public class ReminderActions {
     public void deleteReminder(int reminderID) {
         String query = "DELETE FROM reminder WHERE reminderID = ?";
 
-        try (Connection conn = Database.connect();
+        try (Connection conn = database.connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, reminderID);

@@ -1,11 +1,14 @@
-package Databas;
+package database;
+
+
+import model.Purchase;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurchaseActions {
+public class PurchaseDAO {
 
     public void addPurchase(LocalDateTime date, int quantity, String supplier, int costPerItem,
                             int totalCost, int itemID, int staffID) {
@@ -13,7 +16,7 @@ public class PurchaseActions {
         String query = "INSERT INTO purchase (purchaseDate, quantity, supplier, costPerItem, totalCost, itemID, staffID) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = Database.connect();
+        try (Connection conn = database.connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setTimestamp(1, Timestamp.valueOf(date));
@@ -36,7 +39,7 @@ public class PurchaseActions {
         List<Purchase> purchases = new ArrayList<>();
         String query = "SELECT * FROM purchase";
 
-        try (Connection conn = Database.connect();
+        try (Connection conn = database.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
@@ -65,7 +68,7 @@ public class PurchaseActions {
         List<Purchase> purchases = new ArrayList<>();
         String query = "SELECT * FROM purchase WHERE staffID = ?";
 
-        try (Connection conn = Database.connect();
+        try (Connection conn = database.connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, staffId);

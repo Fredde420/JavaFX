@@ -1,4 +1,4 @@
-package Databas;
+package model;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +9,7 @@ public class Reminder {
     private int loanID;
 
 
-    public Reminder(int reminderID, LocalDateTime userID, int loanID, int reminderDate) {
+    public Reminder(int userID, LocalDateTime reminderDate, int loanID, int reminderID) {
         this.reminderID = reminderID;
         this.userID = userID;
         this.loanID = loanID;

@@ -1,17 +1,19 @@
-package Databas;
+package database;
+
+import model.Fines;
 
 import java.sql.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-    public class FineActions {
+    public class FineDAO {
 
         public List<Fines> getAllFines() {
             List<Fines> fines = new ArrayList<>();
             String query = "SELECT * FROM fine";
 
-            try (Connection conn = Database.connect();
+            try (Connection conn = database.connect();
                  Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery(query)) {
 
@@ -35,7 +37,7 @@ import java.util.List;
         public void addFine(Integer loanId, BigDecimal amount, Boolean paid) {
             String query = "INSERT INTO fine (loan_id, amount, paid) VALUES (?, ?, ?)";
 
-            try (Connection conn = Database.connect();
+            try (Connection conn = database.connect();
                  PreparedStatement stmt = conn.prepareStatement(query)) {
 
                 if (loanId != null) stmt.setInt(1, loanId);
@@ -58,7 +60,7 @@ import java.util.List;
         public void updateFinePaidStatus(int fineId, boolean paid) {
             String query = "UPDATE fine SET paid = ? WHERE fine_id = ?";
 
-            try (Connection conn = Database.connect();
+            try (Connection conn = database.connect();
                  PreparedStatement stmt = conn.prepareStatement(query)) {
 
                 stmt.setBoolean(1, paid);

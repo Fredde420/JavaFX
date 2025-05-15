@@ -74,4 +74,49 @@ public class ReminderDAO {
             e.printStackTrace();
         }
     }
+
+    public void createRemindersForAllOverdueLoans() {
+        String overdueQuery = "SELECT loanID, memberId FROM loan WHERE dueDate < CURDATE() AND returnDate IS NULL";
+        String checkReminderQuery = "SELECT 1 FROM reminder WHERE loanID = ?";
+        String insertQuery = "INSERT INTO reminder (reminderDate, userID, loanID) VALUES (?, ?, ?)";
+
+        int count = 0;
+
+        try (Connection conn = database.connect();
+             PreparedStatement overdueStmt = conn.prepareStatement(overdueQuery);
+             ResultSet rs = overdueStmt.executeQuery()) {
+
+            while (rs.next()) {
+                int loanID = rs.getInt("loanID");
+                int userID = rs.getInt("memberId");
+
+                // Kontrollera om påminnelse redan finns
+                try (PreparedStatement checkStmt = conn.prepareStatement(checkReminderQuery)) {
+                    checkStmt.setInt(1, loanID);
+                    ResultSet checkResult = checkStmt.executeQuery();
+
+                    if (!checkResult.next()) {
+                        // Skapa ny påminnelse
+                        try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+                            insertStmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+                            insertStmt.setInt(2, userID);
+                            insertStmt.setInt(3, loanID);
+                            insertStmt.executeUpdate();
+                            count++;
+                            System.out.println("✔ Skapade påminnelse för loanID: " + loanID);
+                        }
+                    } else {
+                        System.out.println("⚠ Påminnelse finns redan för loanID: " + loanID);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Totalt nya påminnelser skapade: " + count);
+    }
+
+
 }

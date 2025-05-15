@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReminderDAO {
-//test
+//test2
     public void createReminder(int reminderID, LocalDateTime reminderDate, int userID, int loanID) {
         String query = "INSERT INTO reminder (reminderID, reminderDate, userID, loanID) VALUES (?, ?, ?, ?)";
 

@@ -25,12 +25,55 @@ public class HelloController {
     }
 
 
-    public void switchToScene2(ActionEvent event) throws IOException {
+    public void switchToStaffLogin(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("StaffLogin.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
+
+    public void switchToUserLogin(ActionEvent event)throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToReview(ActionEvent event)throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToLoanBook(ActionEvent event)throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToLoanFilm(ActionEvent event)throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToReservation(ActionEvent event)throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
+
+
 

@@ -5,17 +5,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.HelloController">
    <children>
-      <Button layoutX="230.0" layoutY="200.0" mnemonicParsing="false" text="Staff Login" onAction="#switchToScene2">
-          <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Label alignment="CENTER" layoutX="192.0" layoutY="14.0" prefHeight="74.0" prefWidth="198.0" text="Start">
+      <Label alignment="CENTER" layoutX="401.0" layoutY="14.0" prefHeight="74.0" prefWidth="198.0" text="Start">
          <font>
             <Font size="50.0" />
          </font>
       </Label>
+       <Button layoutX="539.0" layoutY="88.0" mnemonicParsing="false" onAction="#switchToStaffLogin" text="Staff Login" />
+      <Button layoutX="429.0" layoutY="88.0" mnemonicParsing="false" onAction="#switchToUserLogin" text="User Login" />
+      <Button layoutX="345.0" layoutY="88.0" mnemonicParsing="false" onAction="#switchToReview" text="Review" />
+      <Button layoutX="236.0" layoutY="88.0" mnemonicParsing="false" onAction="#switchToLoanBook" text="Loan book" />
+      <Button layoutX="136.0" layoutY="88.0" mnemonicParsing="false" onAction="#switchToLoanFilm" text="Loan film" />
+      <Button layoutX="20.0" layoutY="88.0" mnemonicParsing="false" onAction="#switchToReservation" text="Reservation" />
    </children>
 </AnchorPane>

@@ -7,8 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.HelloController">
    <children>
-      <Button layoutX="230.0" layoutY="200.0" mnemonicParsing="false" text="Staff Login">
-          <onAction>switchToScene2</onAction>
+      <Button layoutX="230.0" layoutY="200.0" mnemonicParsing="false" text="Staff Login" onAction="#switchToScene2">
           <font>
             <Font size="20.0" />
          </font>

@@ -1,37 +1,36 @@
 package com.example.javafx;
 
-import database.ItemDAO;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import model.Item;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import java.util.List;
+
+import java.io.IOException;
+
 
 public class HelloController {
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
-    @FXML
-    private TableView<Item> itemTable;
+    public void switchToScene1(ActionEvent event)throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
-    @FXML
-    private TableColumn<Item, String> titleColumn;
 
-    @FXML
-    private TableColumn<Item, String> authorColumn;
-
-    @FXML
-    private TableColumn<Item, String> typeColumn;
-
-    @FXML
-    public void initialize() {
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-
-        ItemDAO itemDAO = new ItemDAO();
-        List<Item> items = itemDAO.getAllItems();
-
-        itemTable.getItems().addAll(items);
+    public void switchToScene2(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("StaffLogin.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
+

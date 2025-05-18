@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.HelloController">
     <children>
-        <Button layoutX="228.0" layoutY="200.0" mnemonicParsing="false" onAction="#switchToScene1" text="Swith to start">
+        <Button layoutX="228.0" layoutY="200.0" mnemonicParsing="false" onAction="#switchToStartSida" text="Swith to start">
             <font>
                 <Font size="20.0" />
             </font>

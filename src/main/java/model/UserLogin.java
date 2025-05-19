@@ -1,4 +1,4 @@
-package BosseTest.Annat;
+package model;
 
 import java.util.Date;
 

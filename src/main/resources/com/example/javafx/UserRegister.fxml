@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.javafx.UserRegisterController"
+            prefHeight="550.0" prefWidth="600.0"
+            style="-fx-background-color: #f4f4f4;">
+    <children>
+
+        <Label layoutX="180" layoutY="20" text="Registrera ny användare">
+            <font><Font size="24.0"/></font>
+        </Label>
+
+        <!-- Personuppgifter -->
+        <Label layoutX="80" layoutY="70" text="Förnamn:"/>
+        <TextField fx:id="firstNameField" layoutX="200" layoutY="70" prefWidth="300"/>
+
+        <Label layoutX="80" layoutY="110" text="Efternamn:"/>
+        <TextField fx:id="lastNameField" layoutX="200" layoutY="110" prefWidth="300"/>
+
+        <Label layoutX="80" layoutY="150" text="E-post:"/>
+        <TextField fx:id="emailField" layoutX="200" layoutY="150" prefWidth="300"/>
+
+        <Label layoutX="80" layoutY="190" text="Telefon:"/>
+        <TextField fx:id="phoneField" layoutX="200" layoutY="190" prefWidth="300"/>
+
+        <!-- Adress -->
+        <Label layoutX="80" layoutY="230" text="Adressrad 1:"/>
+        <TextField fx:id="adressRad1Field" layoutX="200" layoutY="230" prefWidth="300"/>
+
+        <Label layoutX="80" layoutY="270" text="Postnummer:"/>
+        <TextField fx:id="postNrField" layoutX="200" layoutY="270" prefWidth="300"/>
+
+        <Label layoutX="80" layoutY="310" text="Ort:"/>
+        <TextField fx:id="ortField" layoutX="200" layoutY="310" prefWidth="300"/>
+
+        <!-- Inloggning -->
+        <Label layoutX="80" layoutY="350" text="Användarnamn:"/>
+        <TextField fx:id="usernameField" layoutX="200" layoutY="350" prefWidth="300"/>
+
+        <Label layoutX="80" layoutY="390" text="Lösenord:"/>
+        <PasswordField fx:id="passwordField" layoutX="200" layoutY="390" prefWidth="300"/>
+
+        <!-- Knappar -->
+        <Button layoutX="200" layoutY="440" text="Registrera" onAction="#handleRegister"/>
+        <Button layoutX="320" layoutY="440" text="Tillbaka" onAction="#handleBack"/>
+
+        <!-- Felmeddelande -->
+        <Label fx:id="messageLabel" layoutX="200" layoutY="490" textFill="red"/>
+
+    </children>
+</AnchorPane>

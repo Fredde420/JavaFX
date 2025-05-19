@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.HelloController">
+
+   <children>
+      <!-- Titel -->
+      <Label layoutX="264.0" layoutY="40.0" style="-fx-font-size: 48px; -fx-text-fill: #2c3e50;" text="Universitetsbiblioteket" />
+
+      <!-- Välkomsttext -->
+      <Label layoutX="320.0" layoutY="110.0" style="-fx-font-size: 18px;" text="Välkommen! Välj ett alternativ nedan:" />
+
+      <!-- Login-knappar -->
+      <Button layoutX="380.0" layoutY="180.0" onAction="#switchToStaffLogin" prefHeight="40" prefWidth="240" style="-fx-font-size: 16px;" text="Logga in som Personal" />
+
+      <Button layoutX="380.0" layoutY="230.0" onAction="#switchToUserLogin" prefHeight="40" prefWidth="240" style="-fx-font-size: 16px;" text="Logga in som Användare" />
+
+      <!-- Övriga knappar -->
+      <Button layoutX="380.0" layoutY="280.0" onAction="#switchToReview" prefHeight="40" prefWidth="240" style="-fx-font-size: 16px;" text="Recensioner" />
+
+   </children>
+</AnchorPane>

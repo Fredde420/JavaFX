@@ -1,4 +1,4 @@
-package BosseTest.Annat;
+package model;
 
 public class Adress {
     private int adressNr;

@@ -23,6 +23,7 @@
         <PasswordField fx:id="userPasswordField" layoutX="380.0" layoutY="431.0" promptText="Password" />
         <Label fx:id="userLoginErrorLabel" layoutX="400.0" layoutY="480.0" textFill="RED" />
         <Button layoutX="441.0" layoutY="524.0" onAction="#handleUserLogin" text="Logga in" />
+
         <!-- Tillbaka till startsidan -->
         <Button layoutX="20.0" layoutY="20.0" text="Tillbaka" onAction="#switchToStartSida" />
     </children>

@@ -1,4 +1,4 @@
-package BosseTest.Annat;
+package model;
 
 public class UserCategory {
     private int categoryID;

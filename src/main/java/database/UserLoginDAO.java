@@ -1,6 +1,6 @@
-package BosseTest.DAO;
+package database;
 
-import BosseTest.Annat.UserLogin;
+import model.UserLogin;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

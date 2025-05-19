@@ -1,6 +1,6 @@
-package BosseTest.DAO;
+package database;
 
-import BosseTest.Annat.StaffLogin;
+import model.StaffLogin;
 import java.sql.*;
 
 public class StaffLoginDAO {

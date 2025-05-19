@@ -1,7 +1,6 @@
-package BosseTest.DAO;
+package database;
 
-import BosseTest.Annat.User;
-import database.database;
+import model.User;
 
 import java.sql.*;
 

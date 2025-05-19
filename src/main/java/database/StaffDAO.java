@@ -1,8 +1,7 @@
-package BosseTest.DAO;
+package database;
 
-import BosseTest.Annat.Staff;
+import model.Staff;
 import java.sql.Connection;
-import database.database;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 

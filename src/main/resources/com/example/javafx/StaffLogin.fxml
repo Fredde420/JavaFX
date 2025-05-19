@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.javafx.HelloController"
+            prefHeight="700.0" prefWidth="1000.0">
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.HelloController">
    <children>
-      <Button layoutX="228.0" layoutY="200.0" mnemonicParsing="false" onAction="#switchToScene1" text="Swith to start">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Label layoutX="182.0" layoutY="14.0" text="Staff Login">
+      <!-- Titel -->
+      <Label layoutX="330.0" layoutY="40.0" text="Staff Login">
          <font>
             <Font size="50.0" />
          </font>
       </Label>
+
+      <!-- Användarnamn -->
+      <Label layoutX="300.0" layoutY="160.0" text="Användarnamn:" />
+      <TextField fx:id="staffUsernameField" layoutX="420.0" layoutY="160.0" promptText="Username" prefWidth="200" />
+
+      <!-- Lösenord -->
+      <Label layoutX="300.0" layoutY="220.0" text="Lösenord:" />
+      <PasswordField fx:id="staffPasswordField" layoutX="420.0" layoutY="220.0" promptText="Password" prefWidth="200" />
+
+      <!-- Felmeddelande -->
+      <Label fx:id="staffLoginErrorLabel" layoutX="420.0" layoutY="270.0" textFill="red" />
+
+      <!-- Logga in-knapp -->
+      <Button layoutX="420.0" layoutY="310.0" text="Logga in" onAction="#handleStaffLogin" prefWidth="200"/>
+
+      <!-- Tillbaka till startsidan -->
+      <Button layoutX="20.0" layoutY="20.0" text="Tillbaka" onAction="#switchToStartSida" />
    </children>
 </AnchorPane>

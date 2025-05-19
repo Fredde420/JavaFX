@@ -1,6 +1,6 @@
 package BosseTest.DAO;
 
-import model.StaffLogin;
+import BosseTest.Annat.StaffLogin;
 import java.sql.*;
 
 public class StaffLoginDAO {
@@ -16,9 +16,9 @@ public class StaffLoginDAO {
         stmt.setInt(1, login.getStaffID());
         stmt.setString(2, login.getUsername());
         stmt.setString(3, login.getPassword());
-        stmt.setTimestamp(4, login.getLastLogin());
-        stmt.setBoolean(5, login.getIsActive());
-        stmt.setTimestamp(6, login.getUpdatedAt());
+        stmt.setTimestamp(4, login.getLastLogin() != null ? new Timestamp(login.getLastLogin().getTime()) : null);
+        stmt.setBoolean(5, login.isActive());
+        stmt.setTimestamp(6, login.getUpdatedAt() != null ? new Timestamp(login.getUpdatedAt().getTime()) : null);
         stmt.executeUpdate();
     }
 
@@ -28,8 +28,14 @@ public class StaffLoginDAO {
         stmt.setInt(1, staffID);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
-            return new StaffLogin(rs.getInt("staffID"), rs.getString("username"), rs.getString("password"),
-                                  rs.getTimestamp("last_login"), rs.getBoolean("is_active"), rs.getTimestamp("updated_at"));
+            StaffLogin login = new StaffLogin();
+            login.setStaffID(rs.getInt("staffID"));
+            login.setUsername(rs.getString("username"));
+            login.setPassword(rs.getString("password"));
+            login.setLastLogin(rs.getTimestamp("last_login"));
+            login.setActive(rs.getBoolean("is_active"));
+            login.setUpdatedAt(rs.getTimestamp("updated_at"));
+            return login;
         }
         return null;
     }

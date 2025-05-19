@@ -14,10 +14,17 @@ public class StaffDashboardController {
     @FXML
     private void handlePurchase(ActionEvent event) throws IOException {
         // Ladda Purchase.fxml (du kan skapa en vy för detta)
-        Parent root = FXMLLoader.load(getClass().getResource("Purchase.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/javafx/Purchase.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("New Purchase");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

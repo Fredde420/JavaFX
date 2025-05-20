@@ -164,7 +164,7 @@ public class LoanDAO {
     public List<StaffLoanView> getUnreturnedLoansForStaff() {
         List<StaffLoanView> loans = new ArrayList<>();
         String query =
-                "SELECT loan.loanID, item.title, loan.loanDate, loan.dueDate, user.username " +
+                "SELECT loan.loanID, item.title, loan.loanDate, loan.dueDate, user.fName, user.lName " +
                         "FROM loan " +
                         "LEFT JOIN itemcopy ON loan.copyID = itemcopy.copyID " +
                         "LEFT JOIN item ON itemcopy.itemID = item.itemID " +
@@ -180,7 +180,10 @@ public class LoanDAO {
                 String title = rs.getString("title");
                 String loanDate = rs.getString("loanDate");
                 String dueDate = rs.getString("dueDate");
-                String username = rs.getString("username");
+                String fName = rs.getString("fName");
+                String lName = rs.getString("lName");
+
+                String username = (fName != null && lName != null) ? fName + " " + lName : "Okänd";
 
                 long daysRemaining = 0;
                 try {
@@ -190,7 +193,6 @@ public class LoanDAO {
                     e.printStackTrace();
                 }
 
-                System.out.println("Laddar lån: " + loanID + " | " + title + " | " + username);
                 loans.add(new StaffLoanView(loanID, title, loanDate, dueDate, username, daysRemaining));
             }
 

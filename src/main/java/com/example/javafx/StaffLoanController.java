@@ -54,6 +54,7 @@ import java.util.ResourceBundle;
 
             staffLoanTable.setItems(observableLoans);
 
+            // Debug: Skriver ut alla lån i konsolen
             System.out.println("🔎 Kontroll av ej returnerade lån:");
             System.out.println("Antal lån: " + loans.size());
             for (StaffLoanView loan : loans) {
@@ -67,5 +68,6 @@ import java.util.ResourceBundle;
                 );
             }
         }
+
 
     }

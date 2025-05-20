@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -9,22 +8,14 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.javafx.ReviewController">
 
-    <top>
-        <Label style="-fx-font-size: 18px; -fx-padding: 10;" text="Reviews" BorderPane.alignment="CENTER" />
-    </top>
-
     <center>
         <TableView fx:id="reviewTable" prefHeight="300">
             <columns>
-                <TableColumn fx:id="colUserId" prefWidth="100" text="User ID" />
-                <TableColumn fx:id="columnReviewer" prefWidth="100" text="Reviewer" />
                 <TableColumn fx:id="columnRating" prefWidth="75" text="Rating" />
                 <TableColumn fx:id="columnText" prefWidth="300" text="Review" />
                 <TableColumn fx:id="columnDate" prefWidth="100" text="Date" />
@@ -33,31 +24,19 @@
     </center>
 
     <bottom>
-        <VBox spacing="10">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
 
             <Label style="-fx-font-size: 14px;" text="Submit a Review" />
 
             <GridPane hgap="10" vgap="10">
-                <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <ComboBox fx:id="ratingCombo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextArea fx:id="reviewArea" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Button fx:id="submitButton" text="Submit Review" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label text="Rating:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="ratingCombo" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-            <columnConstraints>
-               <ColumnConstraints />
-               <ColumnConstraints />
-            </columnConstraints>
-            <rowConstraints>
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-            </rowConstraints>
+                <Label text="Review:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextArea fx:id="reviewArea" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Button fx:id="submitButton" text="Submit Review" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </GridPane>
-        </VBox>
-    </bottom>
 
+    </bottom>
 </BorderPane>
+

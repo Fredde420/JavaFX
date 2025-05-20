@@ -11,6 +11,15 @@ public class Loan {
     private LocalDate loanDate;
     private LocalDate dueDate;
     private LocalDate returnDate;
+    private String itemTitle; // nytt fält
+
+    public String getItemTitle() {
+        return itemTitle;
+    }
+
+    public void setItemTitle(String itemTitle) {
+        this.itemTitle = itemTitle;
+    }
 
     public Loan(int i, int itemCopyId, int memberId, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate) {}
 

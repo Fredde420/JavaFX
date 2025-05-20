@@ -59,5 +59,39 @@ public class LoanDAO {
         return loans;
     }
 
+    public List<Loan> getActiveLoansByUser(int userId) {
+        List<Loan> loans = new ArrayList<>();
+        String query =
+                "SELECT loan.*, item.title " +
+                        "FROM loan " +
+                        "JOIN itemcopy ON loan.itemCopyId = itemcopy.copyId " +
+                        "JOIN item ON itemcopy.itemId = item.itemId " +
+                        "WHERE loan.memberId = ? AND loan.returnDate IS NULL";
+
+        try (Connection conn = database.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Loan loan = new Loan(
+                        rs.getInt("loanId"),
+                        rs.getInt("itemCopyId"),
+                        rs.getInt("memberId"),
+                        rs.getDate("loanDate").toLocalDate(),
+                        rs.getDate("dueDate").toLocalDate(),
+                        null // eftersom returnDate är NULL
+                );
+                loan.setItemTitle(rs.getString("title")); // Nytt fält i modellen
+                loans.add(loan);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return loans;
+    }
 
 }

@@ -23,6 +23,7 @@
     <center>
         <TableView fx:id="reviewTable" prefHeight="300">
             <columns>
+                <TableColumn fx:id="colUserId" prefWidth="100" text="User ID" />
                 <TableColumn fx:id="columnReviewer" prefWidth="100" text="Reviewer" />
                 <TableColumn fx:id="columnRating" prefWidth="75" text="Rating" />
                 <TableColumn fx:id="columnText" prefWidth="300" text="Review" />
@@ -40,16 +41,11 @@
             <Label style="-fx-font-size: 14px;" text="Submit a Review" />
 
             <GridPane hgap="10" vgap="10">
-                <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                 <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-                <Label text="Rating:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                 <ComboBox fx:id="ratingCombo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                <Label text="Review:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                 <TextArea fx:id="reviewArea" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
                 <Button fx:id="submitButton" text="Submit Review" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
             <columnConstraints>
                <ColumnConstraints />
                <ColumnConstraints />

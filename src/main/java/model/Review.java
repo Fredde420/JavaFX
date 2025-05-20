@@ -5,18 +5,16 @@ import java.time.LocalDate;
 public class Review {
     private int reviewId;
     private int userId;
-    private int memberId;
     private int itemId;
     private int rating;
     private String comment;
     private LocalDate reviewDate;
 
-    public Review(int i, int itemId, int memberId, int rating, String comment, LocalDate date) {}
+    public Review(int i, int itemId, int rating, String comment, LocalDate date) {}
 
-    public Review(int reviewId, int userId, int memberId, int itemId, int rating, String comment, LocalDate reviewDate) {
+    public Review(int reviewId, int userId, int itemId, int rating, String comment, LocalDate reviewDate) {
         this.reviewId = reviewId;
         this.userId = userId;
-        this.memberId = memberId;
         this.itemId = itemId;
         this.rating = rating;
         this.comment = comment;
@@ -28,9 +26,6 @@ public class Review {
 
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
-
-    public int getMemberId() {return memberId; }
-    public void setMemberId(int memberId) { this.memberId = memberId; }
 
     public int getItemId() { return itemId; }
     public void setItemId(int itemId) { this.itemId = itemId; }

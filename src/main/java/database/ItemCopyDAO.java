@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemCopyDAO {
+
     public List<ItemCopy> getAllItemCopies() {
         List<ItemCopy> copies = new ArrayList<>();
-        String query = "SELECT * FROM item_copy";
+        String query = "SELECT * FROM itemcopy";
 
         try (Connection conn = database.connect();
              Statement stmt = conn.createStatement();
@@ -16,11 +17,11 @@ public class ItemCopyDAO {
 
             while (rs.next()) {
                 ItemCopy copy = new ItemCopy(
-                        rs.getInt("itemCopyId"),
-                        rs.getInt("itemId"),
+                        rs.getInt("copyID"),
+                        rs.getInt("itemID"),
                         rs.getString("barcode"),
-                        rs.getString("location"),
-                        rs.getBoolean("available")
+                        rs.getString("physicalLocation"),
+                        rs.getBoolean("isAvailable")
                 );
                 copies.add(copy);
             }
@@ -32,8 +33,8 @@ public class ItemCopyDAO {
         return copies;
     }
 
-     public ItemCopy getAvailableCopyByItemId(int itemId) {
-        String query = "SELECT * FROM item_copy WHERE itemId = ? AND available = true LIMIT 1";
+    public ItemCopy getAvailableCopyByItemId(int itemId) {
+        String query = "SELECT * FROM itemcopy WHERE itemID = ? AND isAvailable = true LIMIT 1";
 
         try (Connection conn = database.connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -43,11 +44,11 @@ public class ItemCopyDAO {
 
             if (rs.next()) {
                 return new ItemCopy(
-                        rs.getInt("itemCopyId"),
-                        rs.getInt("itemId"),
+                        rs.getInt("copyID"),
+                        rs.getInt("itemID"),
                         rs.getString("barcode"),
-                        rs.getString("location"),
-                        rs.getBoolean("available")
+                        rs.getString("physicalLocation"),
+                        rs.getBoolean("isAvailable")
                 );
             }
 
@@ -58,8 +59,8 @@ public class ItemCopyDAO {
         return null; // ingen ledig kopia
     }
 
-   /* public void printAllCopiesByItemId(int itemId) {
-        String query = "SELECT * FROM item_copy WHERE itemId = ?";
+    public void printAllCopiesByItemId(int itemId) {
+        String query = "SELECT * FROM itemcopy WHERE itemID = ?";
 
         try (Connection conn = database.connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -68,31 +69,29 @@ public class ItemCopyDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                System.out.println("Kopia ID: " + rs.getInt("itemCopyId") +
-                        ", Available: " + rs.getBoolean("available") +
-                        " (Rått värde: " + rs.getString("available") + ")");
+                System.out.println("Kopia ID: " + rs.getInt("copyID") +
+                        ", isAvailable: " + rs.getBoolean("isAvailable") +
+                        " (Rått värde: " + rs.getString("isAvailable") + ")");
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    } */
-
-
-
-    public void markCopyAsUnavailable(int itemCopyId) {
-        String query = "UPDATE item_copy SET available = false WHERE itemCopyId = ?";
-
-        try (Connection conn = database.connect();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, itemCopyId);
-            stmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public void markCopyAsUnavailable(int copyId) {
+        String query = "UPDATE itemcopy SET isAvailable = false WHERE copyID = ?";
 
+        try (Connection conn = database.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, copyId);
+            int rowsUpdated = stmt.executeUpdate();
+            System.out.println("Rows updated: " + rowsUpdated);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

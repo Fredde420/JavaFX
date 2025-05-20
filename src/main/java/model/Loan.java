@@ -4,57 +4,81 @@ import java.time.LocalDate;
 
 public class Loan {
     private int loanId;
-    private int userId;
-    private int memberId;
-    private int copyId;
-    private int itemCopyId;
+    private int itemCopyId;  // motsvarar copyID i databasen
+    private int memberId;    // motsvarar userID i databasen
     private LocalDate loanDate;
     private LocalDate dueDate;
-    private LocalDate returnDate;
-    private String itemTitle; // nytt fält
+    private LocalDate returnDate; // motsvarar returnedDate i databasen
+    private int status; // t.ex. 0 = aktiv, 1 = återlämnad
 
-    public String getItemTitle() {
-        return itemTitle;
-    }
+    public Loan(int i, int copyId, int memberId, LocalDate today, LocalDate due, Object o) {}
 
-    public void setItemTitle(String itemTitle) {
-        this.itemTitle = itemTitle;
-    }
-
-    public Loan(int i, int itemCopyId, int memberId, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate) {}
-
-    public Loan(int loanId, int userId, int copyId, int itemCopyId, int memberId, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate) {
+    public Loan(int loanId, int itemCopyId, int memberId, LocalDate loanDate,
+                LocalDate dueDate, LocalDate returnDate, int status) {
         this.loanId = loanId;
-        this.userId = userId;
-        this.memberId = memberId;
-        this.copyId = copyId;
         this.itemCopyId = itemCopyId;
+        this.memberId = memberId;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
         this.returnDate = returnDate;
+        this.status = status;
     }
 
-    public int getLoanId() { return loanId; }
-    public void setLoanId(int loanId) { this.loanId = loanId; }
+    // Getters and setters
+    public int getLoanId() {
+        return loanId;
+    }
 
-    public int getUserId() { return userId; }
-    public void setUserId(int userId) { this.userId = userId; }
+    public void setLoanId(int loanId) {
+        this.loanId = loanId;
+    }
 
-    public int getMemberId() {return memberId; }
-    public void setMemberId(int memberId) { this.memberId = memberId; }
+    public int getItemCopyId() {
+        return itemCopyId;
+    }
 
-    public int getCopyId() { return copyId; }
-    public void setCopyId(int copyId) { this.copyId = copyId; }
+    public void setItemCopyId(int itemCopyId) {
+        this.itemCopyId = itemCopyId;
+    }
 
-    public int getItemCopyId() {return itemCopyId; }
-    public void setItemCopyId(int itemCopyId) { this.itemCopyId = itemCopyId; }
+    public int getMemberId() {
+        return memberId;
+    }
 
-    public LocalDate getLoanDate() { return loanDate; }
-    public void setLoanDate(LocalDate loanDate) { this.loanDate = loanDate; }
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
 
-    public LocalDate getDueDate() { return dueDate; }
-    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
+    public LocalDate getLoanDate() {
+        return loanDate;
+    }
 
-    public LocalDate getReturnDate() { return returnDate; }
-    public void setReturnDate(LocalDate returnDate) { this.returnDate = returnDate; }
+    public void setLoanDate(LocalDate loanDate) {
+        this.loanDate = loanDate;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }
+

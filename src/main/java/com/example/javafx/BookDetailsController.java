@@ -45,8 +45,9 @@ public class BookDetailsController {
     public void handleLoan(ActionEvent event) {
         int memberId = Session.getLoggedInUserId(); // ← korrekt inloggad användare
 
-        // Debug-utskrift:
-        System.out.println("Försöker låna bok med itemId: " + selectedItem.getItemId());
+        ItemCopyDAO copyDAO = new ItemCopyDAO();
+        System.out.println("Testar kopior för itemId: " + selectedItem.getItemId());
+        copyDAO.printAllCopiesByItemId(selectedItem.getItemId());
 
         if (memberId == -1) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Ingen användare är inloggad.", ButtonType.OK);
@@ -54,7 +55,7 @@ public class BookDetailsController {
             return;
         }
         // Hämta ledig kopia
-        ItemCopyDAO copyDAO = new ItemCopyDAO();
+        //ItemCopyDAO copyDAO = new ItemCopyDAO();
         //copyDAO.printAllCopiesByItemId(selectedItem.getItemId());
         ItemCopy availableCopy = copyDAO.getAvailableCopyByItemId(selectedItem.getItemId());
 
@@ -71,7 +72,8 @@ public class BookDetailsController {
         // Skapa låneobjekt
         LocalDate today = LocalDate.now();
         LocalDate due = today.plusDays(14);
-        Loan loan = new Loan(0, availableCopy.getCopyId(), memberId, today, due, null);
+        Loan loan = new Loan(0, availableCopy.getCopyId(), memberId, today, due, null, 0); // status 0 = aktivt lån
+
 
         // Lägg till lån och markera kopia som upptagen
         LoanDAO loanDAO = new LoanDAO();

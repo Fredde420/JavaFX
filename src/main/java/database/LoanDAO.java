@@ -1,13 +1,19 @@
 package database;
 
 import model.Loan;
+import model.LoanWithItemTitle;
+import model.StaffLoanView;
+
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoanDAO {
     public void insertLoan(Loan loan) {
-        String sql = "INSERT INTO loan (copyID, userID, loanDate, dueDate, returnedDate, status) VALUES (?, ?, ?, ?, ?, ?)";;
+        String sql = "INSERT INTO loan (copyID, userID, loanDate, dueDate, returnedDate, status) VALUES (?, ?, ?, ?, ?, ?)";
+        ;
 
         try (Connection conn = database.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -106,4 +112,91 @@ public class LoanDAO {
         return loans;
     }
 
+    public List<LoanWithItemTitle> getLoansByUserId(int userId) {
+        List<LoanWithItemTitle> loans = new ArrayList<>();
+
+        String query =
+                "SELECT loan.loanID, loan.loanDate, loan.dueDate, loan.status, item.title " +
+                        "FROM loan " +
+                        "LEFT JOIN itemcopy ON loan.copyID = itemcopy.copyID " +
+                        "LEFT JOIN item ON itemcopy.itemID = item.itemID " +
+                        "WHERE loan.userID = ?";
+
+        try (Connection conn = database.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int loanID = rs.getInt("loanID");
+                String loanDate = rs.getString("loanDate");
+                String dueDate = rs.getString("dueDate");
+                int statusInt = rs.getInt("status");
+                String title = rs.getString("title");
+
+                String status;
+                switch (statusInt) {
+                    case 0:
+                        status = "Pågående";
+                        break;
+                    case 1:
+                        status = "Återlämnad";
+                        break;
+                    case 2:
+                        status = "Försenad";
+                        break;
+                    default:
+                        status = "Okänd";
+                        break;
+                }
+
+                loans.add(new LoanWithItemTitle(loanID, loanDate, dueDate, status, title));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return loans;
+    }
+
+    public List<StaffLoanView> getUnreturnedLoansForStaff() {
+        List<StaffLoanView> loans = new ArrayList<>();
+        String query =
+                "SELECT loan.loanID, item.title, loan.loanDate, loan.dueDate, user.username " +
+                        "FROM loan " +
+                        "LEFT JOIN itemcopy ON loan.copyID = itemcopy.copyID " +
+                        "LEFT JOIN item ON itemcopy.itemID = item.itemID " +
+                        "LEFT JOIN user ON loan.userID = user.userID " +
+                        "WHERE loan.returnedDate IS NULL";
+
+        try (Connection conn = database.connect();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int loanID = rs.getInt("loanID");
+                String title = rs.getString("title");
+                String loanDate = rs.getString("loanDate");
+                String dueDate = rs.getString("dueDate");
+                String username = rs.getString("username");
+
+                long daysRemaining = 0;
+                try {
+                    LocalDate due = LocalDate.parse(dueDate);
+                    daysRemaining = ChronoUnit.DAYS.between(LocalDate.now(), due);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                loans.add(new StaffLoanView(loanID, title, loanDate, dueDate, username, daysRemaining));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return loans;
+    }
 }

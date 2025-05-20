@@ -17,7 +17,7 @@
          <items>
       
               <Button onAction="#switchToItemSearch" text="Sök objekt" />
-              <Button text="Mina lån" />
+              <Button onAction="#switchToMinaLån" text="Mina lån" />
               <Button onAction="#logout" text="Logga ut" />
          </items>
       </ToolBar>

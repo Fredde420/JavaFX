@@ -16,6 +16,9 @@
             </font>
         </Label>
 
+        <!-- Aktiva Lån -->
+        <Button layoutX="400.0" layoutY="100.0" text="Aktiva Lån" onAction="#handleLoans"/>
+
         <!-- Inköpsknapp -->
         <Button layoutX="400.0" layoutY="150.0" text="Registrera Inköp" onAction="#handlePurchase"/>
 

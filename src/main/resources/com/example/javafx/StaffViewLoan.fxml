@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.javafx.StaffLoanController"
             prefHeight="400.0" prefWidth="600.0">
-    <TableView fx:id="staffLoanTable">
+
+    <TableView fx:id="staffLoanTable"
+               layoutX="20.0" layoutY="20.0"
+               prefWidth="560.0" prefHeight="360.0">
         <columns>
             <TableColumn fx:id="loanIDColumn" text="Låne-ID" />
             <TableColumn fx:id="titleColumn" text="Titel" />
@@ -21,5 +21,4 @@
             <TableColumn fx:id="daysRemainingColumn" text="Dagar kvar" />
         </columns>
     </TableView>
-
 </AnchorPane>

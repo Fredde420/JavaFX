@@ -12,6 +12,16 @@ import java.io.IOException;
 public class UserDashboardController {
 
     @FXML
+    public void switchToItemSearch(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ItemSearch.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+    @FXML
     private void logout(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -1,5 +1,6 @@
 package com.example.javafx;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +14,18 @@ import javafx.scene.control.Label;
 import java.sql.*;
 
 import database.database;
+import model.Item;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class HelloController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+
 
     @FXML
     private TextField staffUsernameField;
@@ -162,6 +168,11 @@ public class HelloController {
             e.printStackTrace();
         }
     }
+
+
+
+
+
 }
 
 

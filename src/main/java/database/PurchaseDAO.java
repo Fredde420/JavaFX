@@ -45,7 +45,6 @@ public class PurchaseDAO {
 
             while (rs.next()) {
                 Purchase p = new Purchase(
-                        rs.getInt("purchaseID"),
                         rs.getTimestamp("purchaseDate").toLocalDateTime(),
                         rs.getInt("quantity"),
                         rs.getString("supplier"),
@@ -76,7 +75,6 @@ public class PurchaseDAO {
 
             while (rs.next()) {
                 Purchase p = new Purchase(
-                        rs.getInt("purchaseID"),
                         rs.getTimestamp("purchaseDate").toLocalDateTime(),
                         rs.getInt("quantity"),
                         rs.getString("supplier"),

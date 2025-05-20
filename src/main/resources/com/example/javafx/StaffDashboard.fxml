@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.javafx.StaffDashboardController"
+            prefHeight="700.0" prefWidth="1000.0">
+    <children>
+        <!-- Titel -->
+        <Label layoutX="330.0" layoutY="50.0" text="Staff Dashboard">
+            <font>
+                <Font size="40.0"/>
+            </font>
+        </Label>
+
+        <!-- Inköpsknapp -->
+        <Button layoutX="400.0" layoutY="150.0" text="Registrera Inköp" onAction="#handlePurchase"/>
+
+        <!-- Logga ut-knapp -->
+        <Button layoutX="400.0" layoutY="250.0" text="Logga ut" onAction="#logout"/>
+    </children>
+</AnchorPane>

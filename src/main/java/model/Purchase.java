@@ -3,18 +3,16 @@ package model;
 import java.time.LocalDateTime;
 
 public class Purchase {
-    private int purchaseID;
-    private LocalDateTime purchaseDate;
-    private int quantity;
-    private String supplier;
-    private int costPerItem;
-    private int totalCost;
-    private int itemID;
-    private int staffID;
+    private final LocalDateTime purchaseDate;
+    private final int quantity;
+    private final String supplier;
+    private final int costPerItem;
+    private final int totalCost;
+    private final int itemID;
+    private final int staffID;
 
-    public Purchase(int purchaseID, LocalDateTime purchaseDate, int quantity, String supplier,
+    public Purchase(LocalDateTime purchaseDate, int quantity, String supplier,
                     int costPerItem, int totalCost, int itemID, int staffID) {
-        this.purchaseID = purchaseID;
         this.purchaseDate = purchaseDate;
         this.quantity = quantity;
         this.supplier = supplier;
@@ -24,7 +22,7 @@ public class Purchase {
         this.staffID = staffID;
     }
 
-    public int getPurchaseID() { return purchaseID; }
+
     public LocalDateTime getPurchaseDate() { return purchaseDate; }
     public int getQuantity() { return quantity; }
     public String getSupplier() { return supplier; }
@@ -36,7 +34,6 @@ public class Purchase {
     @Override
     public String toString() {
         return "Purchase{" +
-                "purchaseID=" + purchaseID +
                 ", purchaseDate=" + purchaseDate +
                 ", quantity=" + quantity +
                 ", supplier='" + supplier + '\'' +

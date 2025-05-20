@@ -3,7 +3,8 @@ package com.example.javafx;
 import database.ReviewDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.collections.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Review;
 
 import java.time.LocalDate;
@@ -11,62 +12,64 @@ import java.time.LocalDate;
 public class ReviewController {
 
     @FXML private TableView<Review> reviewTable;
-    @FXML private TableColumn<Review, Integer> colReviewId, colItemId, colMemberId, colRating;
-    @FXML private TableColumn<Review, String> colComment;
-    @FXML private TableColumn<Review, LocalDate> colReviewDate;
+    @FXML private TableColumn<Review, Integer> columnRating;
+    @FXML private TableColumn<Review, String> columnText;
+    @FXML private TableColumn<Review, LocalDate> columnDate;
 
-    @FXML private TextField itemIdField, memberIdField, ratingField, commentField;
-    @FXML private DatePicker reviewDatePicker;
+    @FXML private ComboBox<Integer> ratingCombo;
+    @FXML private TextArea reviewArea;
+    @FXML private Button submitButton;
 
-    private final ReviewDAO dao = new ReviewDAO();
+    private ReviewDAO reviewDAO = new ReviewDAO();
+    private ObservableList<Review> reviewList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        colReviewId.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getReviewId()).asObject());
-        colItemId.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getItemId()).asObject());
-        colMemberId.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getMemberId()).asObject());
-        colRating.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getRating()).asObject());
-        colComment.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getComment()));
-        colReviewDate.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getReviewDate()));
+        columnRating.setCellValueFactory(data -> data.getValue().ratingProperty().asObject());
+        columnText.setCellValueFactory(data -> data.getValue().textProperty());
+        columnDate.setCellValueFactory(data -> data.getValue().dateProperty());
 
-        handleRefresh();
+        ratingCombo.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5));
+
+        loadReviews();
+
+        submitButton.setOnAction(e -> handleAddReview());
     }
 
-    @FXML
-    private void handleAdd() {
-        try {
-            int itemId = Integer.parseInt(itemIdField.getText());
-            int memberId = Integer.parseInt(memberIdField.getText());
-            int rating = Integer.parseInt(ratingField.getText());
-            String comment = commentField.getText();
-            LocalDate date = reviewDatePicker.getValue();
+    private void loadReviews() {
+        reviewList.setAll(reviewDAO.getAllReviews());
+        reviewTable.setItems(reviewList);
+    }
 
-            Review review = new Review(0, itemId, memberId, rating, comment, date);
-            dao.insertReview(review);
-            handleRefresh();
-            handleClear();
-        } catch (Exception e) {
-            showAlert("Invalid input: " + e.getMessage());
+    private void handleAddReview() {
+        if (!Session.isLoggedIn()) {
+            showAlert("Login Required", "Please log in before submitting a review.");
+            return;
         }
+
+        Integer rating = ratingCombo.getValue();
+        String text = reviewArea.getText();
+        int userId = Session.getLoggedInUserId();
+        LocalDate date = LocalDate.now();
+
+        if (rating == null || text.isEmpty()) {
+            showAlert("Missing Fields", "Please fill in all fields.");
+            return;
+        }
+
+        Review review = new Review(userId, rating, text, date);
+        reviewDAO.addReview(review);
+        loadReviews();
+
+        ratingCombo.setValue(null);
+        reviewArea.clear();
     }
 
-    @FXML
-    private void handleRefresh() {
-        reviewTable.setItems(FXCollections.observableArrayList(dao.getAllReviews()));
-    }
-
-    @FXML
-    private void handleClear() {
-        itemIdField.clear();
-        memberIdField.clear();
-        ratingField.clear();
-        commentField.clear();
-        reviewDatePicker.setValue(null);
-    }
-
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
-        alert.setTitle("Error");
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 }

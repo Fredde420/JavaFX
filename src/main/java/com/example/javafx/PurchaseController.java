@@ -24,7 +24,6 @@ public class PurchaseController {
     @FXML
     private void handleSave(ActionEvent event) {
         try {
-            // Parse input from the form
             LocalDateTime date = purchaseDatePicker.getValue().atStartOfDay();
             int quantity = Integer.parseInt(quantityField.getText());
             String supplier = supplierField.getText();
@@ -33,16 +32,13 @@ public class PurchaseController {
             int itemID = Integer.parseInt(itemIDField.getText());
             int staffID = Integer.parseInt(staffIDField.getText());
 
-            // Call the DAO
             PurchaseDAO dao = new PurchaseDAO();
             dao.addPurchase(date, quantity, supplier, costPerItem, totalCost, itemID, staffID);
 
-            // Optional: clear fields or show success message
             System.out.println("Purchase saved to database.");
 
         } catch (Exception e) {
             e.printStackTrace();
-            // Optional: show alert dialog here
         }
     }
 
@@ -67,9 +63,6 @@ public class PurchaseController {
             totalCostField.setText("");
         }
     }
-
-
-
 
     private Purchase getPurchase(LocalDateTime purchaseDate) {
         int quantity = Integer.parseInt(quantityField.getText());

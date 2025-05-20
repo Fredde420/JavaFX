@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8"
+<BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.javafx.BookDetailsController"
             prefWidth="600" prefHeight="400">
 
-    <children>
-        <Label fx:id="titleLabel" layoutX="30" layoutY="30" style="-fx-font-size: 24px;" />
-        <Label fx:id="infoLabel" layoutX="30" layoutY="80" wrapText="true" prefWidth="540"/>
+    <top>
+        <Label fx:id="titleLabel" style="-fx-font-size: 24px; -fx-font-weight: bold;" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="15" bottom="10" left="10" right="10"/>
+            </padding>
+        </Label>
+    </top>
 
-        <Button text="Låna" layoutX="30" layoutY="300" onAction="#handleLoan" />
-        <Button text="Tillbaka" layoutX="100" layoutY="300" onAction="#handleBack" />
-        <Button layoutX="200" layoutY="300" text="Review" onAction="#handleReview"/>
-    </children>
-</AnchorPane>
+    <center>
+        <VBox spacing="15" alignment="TOP_LEFT">
+            <padding>
+                <Insets top="10" bottom="10" left="20" right="20"/>
+            </padding>
+            <Label fx:id="infoLabel" wrapText="true"/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox spacing="20" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" bottom="10" left="20" right="20"/>
+            </padding>
+            <Button text="Låna" onAction="#handleLoan"/>
+            <Button text="Recensera" onAction="#handleReview"/>
+            <Button text="Tillbaka" onAction="#handleBack"/>
+        </HBox>
+    </bottom>
+</BorderPane>

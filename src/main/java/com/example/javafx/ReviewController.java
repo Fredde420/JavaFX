@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Review;
-
 import java.time.LocalDate;
 
 public class ReviewController {
@@ -20,8 +19,12 @@ public class ReviewController {
     @FXML private TextArea reviewArea;
     @FXML private Button submitButton;
 
+    @FXML private Label itemTitleLabel;
+
     private ReviewDAO reviewDAO = new ReviewDAO();
     private ObservableList<Review> reviewList = FXCollections.observableArrayList();
+
+    private int itemId;
 
     @FXML
     public void initialize() {
@@ -31,13 +34,19 @@ public class ReviewController {
 
         ratingCombo.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5));
 
-        loadReviews();
-
         submitButton.setOnAction(e -> handleAddReview());
     }
 
+    public void setItem(int itemId, String itemTitle) {
+        this.itemId = itemId;
+        if (itemTitleLabel != null) {
+            itemTitleLabel.setText("Recensioner för: " + itemTitle);
+        }
+        loadReviews();
+    }
+
     private void loadReviews() {
-        reviewList.setAll(reviewDAO.getAllReviews());
+        reviewList.setAll(reviewDAO.getReviewsByItemId(itemId));
         reviewTable.setItems(reviewList);
     }
 
@@ -57,7 +66,7 @@ public class ReviewController {
             return;
         }
 
-        Review review = new Review(userId, rating, text, date);
+        Review review = new Review(userId, itemId, rating, text, date);
         reviewDAO.addReview(review);
         loadReviews();
 
@@ -73,3 +82,4 @@ public class ReviewController {
         alert.showAndWait();
     }
 }
+

@@ -20,12 +20,18 @@ public class StaffDashboardController {
         stage.show();
     }
 
-
-
-
     @FXML
     private void logout(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    @FXML
+    public void handleLoans(javafx.event.ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StaffViewLoan.fxml"));
+        Parent root = loader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

@@ -9,10 +9,29 @@
             prefWidth="600" prefHeight="400">
 
     <children>
-        <Label fx:id="titleLabel" layoutX="30" layoutY="30" style="-fx-font-size: 24px;" />
-        <Label fx:id="infoLabel" layoutX="30" layoutY="80" wrapText="true" prefWidth="540"/>
+        <!-- Boktitel -->
+        <Label fx:id="titleLabel"
+               layoutX="30" layoutY="30"
+               style="-fx-font-size: 24px;" />
 
-        <Button text="Låna" layoutX="30" layoutY="300" onAction="#handleLoan" />
-        <Button text="Tillbaka" layoutX="100" layoutY="300" onAction="#handleBack" />
+        <!-- Info om boken -->
+        <Label fx:id="infoLabel"
+               layoutX="30" layoutY="80"
+               wrapText="true"
+               prefWidth="540"/>
+
+        <!-- Låna-knapp -->
+        <Button fx:id="loanButton"
+                text="Låna"
+                layoutX="30" layoutY="300"
+                onAction="#handleLoan" />
+
+
+
+        <!-- Tillbaka-knapp -->
+        <Button text="Tillbaka"
+                layoutX="100" layoutY="300"
+                onAction="#handleBack" />
     </children>
 </AnchorPane>
+

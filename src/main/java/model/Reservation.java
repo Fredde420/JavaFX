@@ -1,37 +1,38 @@
 package model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Reservation {
     private int reservationId;
     private int userId;
-    private int memberId;
-    private int itemId;
-    private LocalDate reservationDate;
+    private int copyId;
+    private int status;
+    private LocalDateTime reservationDate;
 
-    public Reservation(int i, int itemId, int memberId, LocalDate date) {}
-
-    public Reservation(int reservationId, int userId, int memberId, int itemId, LocalDate reservationDate) {
+    public Reservation(int reservationId, int userId, int copyId, int status, LocalDateTime reservationDate) {
         this.reservationId = reservationId;
         this.userId = userId;
-        this.memberId = memberId;
-        this.itemId = itemId;
+        this.copyId = copyId;
+        this.status = status;
         this.reservationDate = reservationDate;
     }
 
+    public Reservation() {
+    }
+
+    // Getters
     public int getReservationId() { return reservationId; }
-    public void setReservationId(int reservationId) { this.reservationId = reservationId; }
-
     public int getUserId() { return userId; }
+    public int getCopyId() { return copyId; }
+    public int getStatus() { return status; }
+    public LocalDateTime getReservationDate() { return reservationDate; }
+
+    // Setters
+    public void setReservationId(int reservationId) { this.reservationId = reservationId; }
     public void setUserId(int userId) { this.userId = userId; }
-
-    public int getMemberId() {return memberId; }
-    public void setMemberId(int memberId) { this.memberId = memberId; }
-
-    public int getItemId() { return itemId; }
-    public void setItemId(int itemId) { this.itemId = itemId; }
-
-    public LocalDate getReservationDate() { return reservationDate; }
-    public void setReservationDate(LocalDate reservationDate) { this.reservationDate = reservationDate; }
+    public void setCopyId(int copyId) { this.copyId = copyId; }
+    public void setStatus(int status) { this.status = status; }
+    public void setReservationDate(LocalDateTime reservationDate) { this.reservationDate = reservationDate; }
 }
+
 

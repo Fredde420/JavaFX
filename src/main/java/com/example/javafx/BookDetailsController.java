@@ -5,6 +5,7 @@ import database.LoanDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -42,11 +43,21 @@ public class BookDetailsController {
 
     @FXML
     public void handleLoan(ActionEvent event) {
-        int memberId = 1; // TODO: ersätt med inloggad användares ID
+        int memberId = Session.getLoggedInUserId(); // ← korrekt inloggad användare
 
+        // Debug-utskrift:
+        System.out.println("Försöker låna bok med itemId: " + selectedItem.getItemId());
+
+        if (memberId == -1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Ingen användare är inloggad.", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
         // Hämta ledig kopia
         ItemCopyDAO copyDAO = new ItemCopyDAO();
+        //copyDAO.printAllCopiesByItemId(selectedItem.getItemId());
         ItemCopy availableCopy = copyDAO.getAvailableCopyByItemId(selectedItem.getItemId());
+
 
         if (availableCopy == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);

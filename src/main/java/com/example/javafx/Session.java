@@ -18,4 +18,5 @@ public class Session {
     public static boolean isLoggedIn() {
         return loggedInUserId != -1;
     }
+
 }

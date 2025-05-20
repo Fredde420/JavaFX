@@ -1,48 +1,76 @@
 package com.example.javafx;
 
-import javafx.fxml.FXML;
 import database.LoanDAO;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import model.Loan;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import model.LoanWithItemTitle;
+import com.example.javafx.Session;
 
-import java.time.LocalDate;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class MyLoanController {
-    public TableView loanTable;
-    @FXML
-    private TableView<Loan> loanTableView;
-    @FXML
-    private TableColumn<Loan, String> titleColumn;
-    @FXML
-    private TableColumn<Loan, LocalDate> loanDateColumn;
-    @FXML
-    private TableColumn<Loan, LocalDate> dueDateColumn;
-    private int loggedInUserId;
+public class MyLoanController implements Initializable {
 
     @FXML
-    public void initialize() {
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("itemTitle"));
-        loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
-        dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+    private TableView<LoanWithItemTitle> loanTable;
 
-        loadUserLoans();
-    }
+    @FXML
+    private TableColumn<LoanWithItemTitle, Integer> loanIDColumn;
 
-    private void loadUserLoans() {
+    @FXML
+    private TableColumn<LoanWithItemTitle, String> loanDateColumn;
+
+    @FXML
+    private TableColumn<LoanWithItemTitle, String> dueDateColumn;
+
+    @FXML
+    private TableColumn<LoanWithItemTitle, String> statusColumn;
+
+    @FXML
+    private TableColumn<LoanWithItemTitle, String> titleColumn;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        int userId = Session.getLoggedInUserId();
         LoanDAO loanDAO = new LoanDAO();
-        List<Loan> userLoans = loanDAO.getActiveLoansByUser(loggedInUserId);
-        loanTableView.getItems().setAll(userLoans);
+        List<LoanWithItemTitle> loans = loanDAO.getLoansByUserId(userId);
+        System.out.println("User ID från session: " + userId);
+
+        ObservableList<LoanWithItemTitle> observableLoans = FXCollections.observableArrayList(loans);
+
+        loanIDColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getLoanID()));
+        loanDateColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getLoanDate()));
+        dueDateColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDueDate()));
+        statusColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getStatus()));
+        titleColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getTitle()));
+
+        loanTable.setItems(observableLoans);
+
+        System.out.println("Antal lån: " + loans.size());
+        for (LoanWithItemTitle loan : loans) {
+            System.out.println(loan.getLoanID() + " - " + loan.getTitle());
+        }
     }
 
-    // Exempel på setter om du vill skicka in user ID från login
-    public void setLoggedInUserId(int userId) {
-        this.loggedInUserId = userId;
-        loadUserLoans();
+    @FXML
+    public void switchToUserDashboard(javafx.event.ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserDashboard.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

@@ -5,12 +5,19 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 import model.StaffLoanView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -38,6 +45,15 @@ import java.util.ResourceBundle;
         @FXML
         private TableColumn<StaffLoanView, Long> daysRemainingColumn;
 
+        @FXML
+        private void switchToStaffDashboard(ActionEvent event) throws IOException {
+            Parent root = FXMLLoader.load(getClass().getResource("StaffDashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+            Session.clearSession();
+        }
+
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
             LoanDAO dao = new LoanDAO();
@@ -53,6 +69,7 @@ import java.util.ResourceBundle;
             daysRemainingColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getDaysRemaining()));
 
             staffLoanTable.setItems(observableLoans);
+
 
             // Debug: Skriver ut alla lån i konsolen
             System.out.println("🔎 Kontroll av ej returnerade lån:");

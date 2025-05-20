@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Loan {
     private int loanId;
     private int itemCopyId;  // motsvarar copyID i databasen
-    //private int memberId;    // motsvarar userID i databasen
+    private int memberId;    // motsvarar userID i databasen
     private LocalDate loanDate;
     private LocalDate dueDate;
     private LocalDate returnDate; // motsvarar returnedDate i databasen
@@ -27,7 +27,7 @@ public class Loan {
                 LocalDate dueDate, LocalDate returnDate, int status) {
         this.loanId = loanId;
         this.itemCopyId = itemCopyId;
-        //this.memberId = memberId;
+        this.memberId = memberId;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
         this.returnDate = returnDate;
@@ -51,13 +51,13 @@ public class Loan {
         this.itemCopyId = itemCopyId;
     }
 
-    /*public int getMemberId() {
+    public int getMemberId() {
         return memberId;
-    }*/
+    }
 
-    /*public void setMemberId(int memberId) {
+    public void setMemberId(int memberId) {
         this.memberId = memberId;
-    }*/
+    }
 
     public LocalDate getLoanDate() {
         return loanDate;

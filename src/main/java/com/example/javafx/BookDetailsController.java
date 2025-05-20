@@ -97,6 +97,23 @@ public class BookDetailsController {
         showAlert("Lån lyckades", "Du har lånat: " + selectedItem.getTitle() + "\nFörfallodatum: " + due);
     }
 
+    @FXML
+    private void handleReview(ActionEvent event) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/javafx/Review.fxml"));
+            Parent root = loader.load();
+            ReviewController controller = loader.getController();
+            controller.setItem(selectedItem.getItemId(), selectedItem.getTitle());
+            Stage stage = new Stage();
+            stage.setTitle("Ny Recension - " + selectedItem.getTitle());
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private void handleReserve() {
         int memberId = Session.getLoggedInUserId();
         if (memberId == -1) {

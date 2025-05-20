@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="700" prefWidth="1000" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.UserSearchFunction">
+
+    <children>
+        <!-- Sökfält -->
+        <TextField fx:id="searchField" layoutX="50" layoutY="40" prefWidth="300" promptText="Sök titel, författare eller ISBN..." />
+
+        <!-- Sök-knapp -->
+        <Button layoutX="370" layoutY="40" onAction="#onSearchClicked" text="Sök" />
+
+        <!-- TableView -->
+        <TableView fx:id="itemTable" layoutX="50" layoutY="90" prefHeight="550" prefWidth="900">
+            <columns>
+                <TableColumn fx:id="titleCol" prefWidth="300" text="Titel" />
+                <TableColumn fx:id="authorCol" prefWidth="250" text="Författare" />
+                <TableColumn fx:id="isbnCol" prefWidth="250" text="ISBN" />
+            </columns>
+        </TableView>
+
+        <!-- Tillbaka-knapp -->
+        <Button layoutX="893.0" layoutY="40.0" onAction="#switchToUserDashboard" text="Tillbaka" />
+    </children>
+</AnchorPane>

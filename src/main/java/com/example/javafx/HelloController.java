@@ -1,5 +1,6 @@
 package com.example.javafx;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +14,18 @@ import javafx.scene.control.Label;
 import java.sql.*;
 
 import database.database;
+import model.Item;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class HelloController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+
 
     @FXML
     private TextField staffUsernameField;
@@ -68,6 +74,14 @@ public class HelloController {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void switchToUserRegister(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UserRegister.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 /*  Ska nog inte ligga i HelloController
     public void switchToLoanBook(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
@@ -97,6 +111,7 @@ public class HelloController {
     private void handleStaffLogin(ActionEvent event) {
         String username = staffUsernameField.getText();
         String password = staffPasswordField.getText();
+
 
         try (Connection conn = database.connect()) {
             String sql = "SELECT * FROM staff_login WHERE username = ? AND password = ?";
@@ -137,7 +152,15 @@ public class HelloController {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                System.out.println("User logged in: " + username);
+                int userId = rs.getInt("userID"); // kolumn i din user_login-tabell
+                String usernameFromDb = rs.getString("username");
+
+                // Spara till session
+                Session.setLoggedInUserId(userId);
+
+                // Debug-logg
+                System.out.println("User logged in: " + usernameFromDb + " (userID: " + userId + ")");
+
 
                 // Växla till användarens dashboard
                 Parent root = FXMLLoader.load(getClass().getResource("UserDashboard.fxml"));
@@ -154,6 +177,11 @@ public class HelloController {
             e.printStackTrace();
         }
     }
+
+
+
+
+
 }
 
 

@@ -84,7 +84,21 @@ public class BookDetailsController {
         alert.setContentText("Du har lånat: " + selectedItem.getTitle() + "\nFörfallodatum: " + due);
         alert.showAndWait();
     }
+    @FXML
+    private void handleReview(ActionEvent event) throws IOException {
 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/javafx/Review.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("New Review");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @FXML

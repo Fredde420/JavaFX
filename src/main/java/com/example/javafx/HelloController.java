@@ -1,6 +1,7 @@
 package com.example.javafx;
 
 import javafx.collections.FXCollections;
+import database.LoanDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,10 +13,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Label;
 import java.sql.*;
-
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 import database.database;
 import model.Item;
-
+import model.Loan;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,20 +29,28 @@ public class HelloController {
     private Parent root;
 
 
-
     @FXML
     private TextField staffUsernameField;
     @FXML
     private PasswordField staffPasswordField;
     @FXML
     private Label staffLoginErrorLabel;
-
     @FXML
     private TextField userUsernameField;
     @FXML
     private PasswordField userPasswordField;
     @FXML
     private Label userLoginErrorLabel;
+
+
+    // Sätt detta från inloggning, t.ex. via setter-metod
+    private int loggedInUserId = 1;
+
+    @FXML
+    private void switchToStartSida() {
+        // Navigering till startsidan, implementera vid behov
+        System.out.println("Switching to start sida...");
+    }
 
     public void switchToStartSida(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));

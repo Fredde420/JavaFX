@@ -32,7 +32,7 @@ public class ItemCopyDAO {
         return copies;
     }
 
-    public ItemCopy getAvailableCopyByItemId(int itemId) {
+     public ItemCopy getAvailableCopyByItemId(int itemId) {
         String query = "SELECT * FROM item_copy WHERE itemId = ? AND available = true LIMIT 1";
 
         try (Connection conn = database.connect();
@@ -57,6 +57,28 @@ public class ItemCopyDAO {
 
         return null; // ingen ledig kopia
     }
+
+   /* public void printAllCopiesByItemId(int itemId) {
+        String query = "SELECT * FROM item_copy WHERE itemId = ?";
+
+        try (Connection conn = database.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, itemId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                System.out.println("Kopia ID: " + rs.getInt("itemCopyId") +
+                        ", Available: " + rs.getBoolean("available") +
+                        " (Rått värde: " + rs.getString("available") + ")");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    } */
+
+
 
     public void markCopyAsUnavailable(int itemCopyId) {
         String query = "UPDATE item_copy SET available = false WHERE itemCopyId = ?";

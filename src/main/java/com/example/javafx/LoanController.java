@@ -23,7 +23,7 @@ public class LoanController {
     public void initialize() {
         colLoanId.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getLoanId()).asObject());
         colItemCopyId.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getItemCopyId()).asObject());
-        colMemberId.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getMemberId()).asObject());
+        //colMemberId.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getMemberId()).asObject());
         colLoanDate.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getLoanDate()));
         colDueDate.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getDueDate()));
         colReturnDate.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getReturnDate()));

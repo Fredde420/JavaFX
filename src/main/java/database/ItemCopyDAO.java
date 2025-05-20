@@ -93,5 +93,33 @@ public class ItemCopyDAO {
             e.printStackTrace();
         }
     }
+    public ItemCopy getFirstCopyByItemId(int itemId) {
+        String query = "SELECT * FROM itemcopy WHERE itemID = ? LIMIT 1";
+
+        try (Connection conn = database.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, itemId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new ItemCopy(
+                        rs.getInt("copyID"),               // 🟢 Rätt kolumnnamn
+                        rs.getInt("itemID"),               // 🟢 Rätt kolumnnamn
+                        rs.getString("barcode"),
+                        rs.getString("physicalLocation"),  // 🟢 Använd samma som i andra metoder
+                        rs.getBoolean("isAvailable")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+
 }
 

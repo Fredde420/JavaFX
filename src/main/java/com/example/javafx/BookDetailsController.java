@@ -2,27 +2,31 @@ package com.example.javafx;
 
 import database.ItemCopyDAO;
 import database.LoanDAO;
+import database.ReservationDAO;
+import database.database;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
 import javafx.scene.Node;
-import javafx.event.ActionEvent;
+import javafx.stage.Stage;
 import model.Item;
 import model.ItemCopy;
 import model.Loan;
+import model.Reservation;
 
 import java.io.IOException;
+import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class BookDetailsController {
 
     @FXML private Label titleLabel;
     @FXML private Label infoLabel;
+    @FXML private Button loanButton;
 
     private Item selectedItem;
 
@@ -37,74 +41,87 @@ public class BookDetailsController {
                         "Plats: " + item.getPhysicalLocation() + "\n" +
                         "Klassificering: " + item.getClassification()
         );
+
+        //loanButton.setDisable(!isItemAvailable(item.getItemId()));
     }
 
-
+    private boolean isItemAvailable(int itemId) {
+        String query = "SELECT available FROM itemcopy WHERE itemId = ? AND available = 1 LIMIT 1";
+        try (Connection conn = database.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, itemId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     @FXML
     public void handleLoan(ActionEvent event) {
-        int memberId = Session.getLoggedInUserId(); // ← korrekt inloggad användare
+        int memberId = Session.getLoggedInUserId();
+        if (memberId == -1) {
+            showAlert("Fel", "Ingen användare är inloggad.");
+            return;
+        }
 
         ItemCopyDAO copyDAO = new ItemCopyDAO();
-        System.out.println("Testar kopior för itemId: " + selectedItem.getItemId());
-        copyDAO.printAllCopiesByItemId(selectedItem.getItemId());
-
-        if (memberId == -1) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Ingen användare är inloggad.", ButtonType.OK);
-            alert.showAndWait();
-            return;
-        }
-        // Hämta ledig kopia
-        //ItemCopyDAO copyDAO = new ItemCopyDAO();
-        //copyDAO.printAllCopiesByItemId(selectedItem.getItemId());
         ItemCopy availableCopy = copyDAO.getAvailableCopyByItemId(selectedItem.getItemId());
 
-
         if (availableCopy == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ej tillgänglig");
-            alert.setHeaderText(null);
-            alert.setContentText("Inga tillgängliga exemplar finns just nu.");
-            alert.showAndWait();
+            alert.setHeaderText("Inga exemplar finns just nu");
+            alert.setContentText("Vill du reservera boken istället?");
+            ButtonType reservera = new ButtonType("Reservera");
+            ButtonType avbryt = new ButtonType("Avbryt", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(reservera, avbryt);
+
+            alert.showAndWait().ifPresent(response -> {
+                if (response == reservera) {
+                    handleReserve();
+                }
+            });
             return;
         }
 
-        // Skapa låneobjekt
         LocalDate today = LocalDate.now();
         LocalDate due = today.plusDays(14);
-        Loan loan = new Loan(0, availableCopy.getCopyId(), memberId, today, due, null, 0); // status 0 = aktivt lån
+        Loan loan = new Loan(0, availableCopy.getCopyId(), memberId, today, due, null, 0);
 
-
-        // Lägg till lån och markera kopia som upptagen
         LoanDAO loanDAO = new LoanDAO();
         loanDAO.insertLoan(loan);
         copyDAO.markCopyAsUnavailable(availableCopy.getCopyId());
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Lån lyckades");
-        alert.setHeaderText(null);
-        alert.setContentText("Du har lånat: " + selectedItem.getTitle() + "\nFörfallodatum: " + due);
-        alert.showAndWait();
+        showAlert("Lån lyckades", "Du har lånat: " + selectedItem.getTitle() + "\nFörfallodatum: " + due);
     }
 
-    @FXML
-    private void handleReview(ActionEvent event) throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/javafx/Review.fxml"));
-            Parent root = loader.load();
-            ReviewController controller = loader.getController();
-            controller.setItem(selectedItem.getItemId(), selectedItem.getTitle());
-            Stage stage = new Stage();
-            stage.setTitle("Ny Recension - " + selectedItem.getTitle());
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void handleReserve() {
+        int memberId = Session.getLoggedInUserId();
+        if (memberId == -1) {
+            showAlert("Fel", "Ingen användare är inloggad.");
+            return;
         }
+
+        ItemCopyDAO copyDAO = new ItemCopyDAO();
+        ItemCopy copy = copyDAO.getFirstCopyByItemId(selectedItem.getItemId());
+        if (copy == null) {
+            showAlert("Fel", "Ingen kopia finns att reservera.");
+            return;
+        }
+
+        Reservation reservation = new Reservation();
+        reservation.setReservationDate(LocalDateTime.now());
+        reservation.setStatus(1);
+        reservation.setUserId(memberId);
+        reservation.setCopyId(copy.getCopyId());
+
+        ReservationDAO dao = new ReservationDAO();
+        dao.insertReservation(reservation);
+
+        showAlert("Reserverad", "Din reservation har registrerats.");
     }
-
-
-
 
     @FXML
     public void handleBack(ActionEvent event) throws IOException {
@@ -113,4 +130,13 @@ public class BookDetailsController {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
 }
+
+

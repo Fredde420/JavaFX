@@ -190,6 +190,7 @@ public class LoanDAO {
                     e.printStackTrace();
                 }
 
+                System.out.println("Laddar lån: " + loanID + " | " + title + " | " + username);
                 loans.add(new StaffLoanView(loanID, title, loanDate, dueDate, username, daysRemaining));
             }
 

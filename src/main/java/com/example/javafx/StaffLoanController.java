@@ -53,6 +53,19 @@ import java.util.ResourceBundle;
             daysRemainingColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getDaysRemaining()));
 
             staffLoanTable.setItems(observableLoans);
+
+            System.out.println("🔎 Kontroll av ej returnerade lån:");
+            System.out.println("Antal lån: " + loans.size());
+            for (StaffLoanView loan : loans) {
+                System.out.println(
+                        loan.getLoanID() + " | " +
+                                loan.getTitle() + " | " +
+                                loan.getLoanDate() + " | " +
+                                loan.getDueDate() + " | " +
+                                loan.getUsername() + " | " +
+                                loan.getDaysRemaining()
+                );
+            }
         }
 
     }

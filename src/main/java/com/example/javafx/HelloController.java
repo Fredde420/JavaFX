@@ -112,6 +112,7 @@ public class HelloController {
         String username = staffUsernameField.getText();
         String password = staffPasswordField.getText();
 
+
         try (Connection conn = database.connect()) {
             String sql = "SELECT * FROM staff_login WHERE username = ? AND password = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -151,7 +152,15 @@ public class HelloController {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                System.out.println("User logged in: " + username);
+                int userId = rs.getInt("userID"); // kolumn i din user_login-tabell
+                String usernameFromDb = rs.getString("username");
+
+                // Spara till session
+                Session.setLoggedInUserId(userId);
+
+                // Debug-logg
+                System.out.println("User logged in: " + usernameFromDb + " (userID: " + userId + ")");
+
 
                 // Växla till användarens dashboard
                 Parent root = FXMLLoader.load(getClass().getResource("UserDashboard.fxml"));
